@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resultados | Jurado ETITC</title>
+  <link rel="stylesheet" href="../../Parte_Estudiantes/styles.css" />
+  <link rel="stylesheet" href="../assets/jurado.css" />
+</head>
+<body>
+  <div class="jury-phone" data-page="resultados">
+    <header class="jury-header card jury-header--compact">
+      <div class="jury-eval-top">
+        <a class="jury-back" href="../panel/index.html" aria-label="Volver">&larr;</a>
+        <strong>Resultados</strong>
+        <span class="jury-stand-pill">Hoy</span>
+      </div>
+    </header>
+
+    <main class="jury-main">
+      <section class="jury-section">
+        <h1 class="jury-title">Proyectos Calificados</h1>
+        <p class="jury-subline">Tus evaluaciones aparecen ordenadas por mejor nota primero.</p>
+      </section>
+
+      <section class="card jury-card jury-best" id="bestProjectCard">
+        <div class="card__body">
+          <p class="jury-best__kicker">MEJOR CALIFICADO</p>
+          <h2 id="bestProjectName">-</h2>
+          <div class="jury-best__meta">
+            <span id="bestProjectStand">Stand -</span>
+            <strong id="bestProjectScore">0 / 100</strong>
+          </div>
+          <p id="bestProjectCategory" class="jury-subline">Categoria: -</p>
+        </div>
+      </section>
+
+      <section class="jury-section">
+        <div class="jury-list" id="resultsList"></div>
+      </section>
+    </main>
+
+    <nav class="jury-bottom-nav" aria-label="Navegacion movil">
+      <a href="../panel/index.html">Inicio</a>
+      <a class="is-active" href="./index.html">Resultados</a>
+      <a href="../../LOGIN/index.html?rol=jurado">Perfil</a>
+    </nav>
+  </div>
+
+  <script type="module" src="../assets/jurado.js"></script>
+</body>
+</html>

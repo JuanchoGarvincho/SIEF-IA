@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Proyecto | Plataforma de Evaluación de Ferias Tecnológicas</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="brand" aria-label="ETITC">
+          <div class="brand__mark">ET</div>
+          <div class="brand__text">
+            <span class="brand__kicker">ETITC</span>
+            <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
+          </div>
+        </div>
+        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav__inner">
+        <a class="nav__link" href="../INSCRIPCION/index.html">Inscripción</a>
+        <a class="nav__link is-active" href="./proyecto.html">Mi Proyecto</a>
+        <a class="nav__link" href="../CALIFICACIONES/calificaciones.html">Calificaciones</a>
+        <a class="nav__link" href="../CRONOGRAMA/cronograma.html">Cronograma</a>
+      </div>
+    </nav>
+
+    <main class="page">
+      <section class="page__hero">
+        <span class="eyebrow">Vista de proyecto</span>
+        <h1 class="page__title">Estado de avance y logística del stand</h1>
+        <p class="page__subtitle">Esta sección es de solo lectura y consolida el progreso del proyecto, la asignación logística y las preguntas técnicas sugeridas por IA.</p>
+      </section>
+
+      <section class="grid grid--two">
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Estado de Avance</h2>
+            <p class="card__subtitle">Seguimiento general del desarrollo del proyecto.</p>
+          </div>
+          <div class="card__body">
+            <div class="scorecard">
+              <div class="scorecard__value">72%</div>
+              <div class="scorecard__label">Avance global del prototipo</div>
+            </div>
+            <div style="margin-top: 1rem;">
+              <div class="progress" aria-label="Progreso del proyecto">
+                <div class="progress__bar" style="width: 72%;"></div>
+              </div>
+              <p class="helper" style="margin-bottom: 0;">En fase de integración final y validación de sensores.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Preguntas Técnicas Sugeridas por IA</h2>
+            <p class="card__subtitle">Enfoques de preparación para la sustentación.</p>
+          </div>
+          <div class="card__body">
+            <ul class="diagnostic__list" style="margin-top: 0;">
+              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>¿Cómo calibran los sensores para garantizar lecturas consistentes en campo?</span></li>
+              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>¿Qué ocurre cuando la conectividad inalámbrica se pierde temporalmente?</span></li>
+              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>¿Cuál es la ventaja comparativa frente a soluciones de riego convencionales?</span></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="card" style="margin-top: 1.25rem;">
+        <div class="card__header">
+          <h2 class="card__title">Asignación y Logística del Stand</h2>
+          <p class="card__subtitle">Información operativa asignada para la feria.</p>
+        </div>
+        <div class="card__body">
+          <div class="grid grid--two" style="align-items: stretch;">
+            <div class="panel">
+              <div class="panel__body">
+                <span class="tag">Stand B22</span>
+                <h3 style="margin: 0.85rem 0 0.4rem; font-size: 1.2rem;">Pabellón Norte</h3>
+                <p class="page__subtitle" style="max-width: none; margin-bottom: 0;">Ubicación asignada con visibilidad media-alta, acceso frontal y espacio suficiente para demostración del prototipo y material visual.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__body">
+                <h3 style="margin: 0 0 0.75rem; font-size: 1.05rem;">Checklist de preparación</h3>
+                <ul class="diagnostic__list" style="margin-top: 0;">
+                  <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>Prototipo funcional, cables y fuente de energía listos.</span></li>
+                  <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>Cartel de proyecto y QR de acceso al repositorio.</span></li>
+                  <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>Tiempo estimado de demostración: 7 minutos.</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="../app.js"></script>
+</body>
+</html>

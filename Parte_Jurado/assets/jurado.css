@@ -1,0 +1,417 @@
+body {
+  background:
+    radial-gradient(900px 360px at 50% -20%, rgba(31, 111, 74, 0.13), transparent 52%),
+    linear-gradient(180deg, #f4f7f5 0%, #eef3f0 100%);
+}
+
+.jury-phone {
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: #f8fbf9;
+  position: relative;
+  padding-bottom: 5.3rem;
+}
+
+.jury-header {
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  box-shadow: 0 2px 10px rgba(7, 37, 22, 0.05);
+}
+
+.jury-user-row,
+.jury-eval-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem;
+}
+
+.jury-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.jury-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--etitic-green-dark);
+  background: linear-gradient(160deg, #eaf4ef, #d9eadd);
+  border: 1px solid rgba(31, 111, 74, 0.16);
+}
+
+.jury-icon-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: #f0f6f3;
+  color: var(--etitic-green-dark);
+  cursor: pointer;
+}
+
+.jury-main {
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.jury-main--compact {
+  gap: 0.7rem;
+}
+
+.jury-section {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.jury-title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #20242c;
+}
+
+.jury-title--small {
+  font-size: 2.1rem;
+}
+
+.jury-subline {
+  margin: 0;
+  color: #707b87;
+  font-weight: 600;
+}
+
+.jury-scan {
+  width: 100%;
+  min-height: 52px;
+  font-size: 1.04rem;
+}
+
+.jury-search {
+  position: relative;
+  display: block;
+}
+
+.jury-search__icon {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  transform: translateY(-50%);
+  color: #91a09a;
+  pointer-events: none;
+}
+
+.jury-search .field__control {
+  padding-left: 2.4rem;
+  min-height: 48px;
+}
+
+.jury-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.jury-section__header h2,
+.jury-card h2 {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.jury-count {
+  min-width: 26px;
+  height: 26px;
+  padding: 0 0.55rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: #4cae68;
+  font-weight: 800;
+  font-size: 0.83rem;
+}
+
+.jury-list {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.jury-item {
+  text-decoration: none;
+  border-radius: 15px;
+  padding: 0.82rem 0.86rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jury-item:active {
+  transform: scale(0.985);
+}
+
+.jury-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.jury-stand,
+.jury-stand-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.26rem 0.62rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  background: #2f8d4f;
+  color: #ffffff;
+}
+
+.jury-stand-pill {
+  background: var(--etitic-green);
+}
+
+.jury-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.26rem 0.62rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.jury-status--pending {
+  color: #cc7d1f;
+  background: #fff1e0;
+}
+
+.jury-status--ok {
+  color: #2f7f4f;
+  background: #e6f6eb;
+}
+
+.jury-item__title {
+  margin-top: 0.52rem;
+  font-size: 1.45rem;
+  line-height: 1.05;
+  font-weight: 800;
+  color: #212a31;
+}
+
+.jury-item__meta {
+  margin-top: 0.42rem;
+  color: #6e7a83;
+  font-size: 1rem;
+}
+
+.jury-bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(430px, 100%);
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  z-index: 25;
+}
+
+.jury-bottom-nav a {
+  padding: 0.85rem 0.4rem 1.05rem;
+  text-align: center;
+  color: #8a959f;
+  font-weight: 700;
+  font-size: 0.83rem;
+}
+
+.jury-bottom-nav a.is-active {
+  color: var(--etitic-green);
+}
+
+.jury-header--compact {
+  position: sticky;
+  top: 0;
+  z-index: 22;
+}
+
+.jury-back {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eef4f1;
+  color: var(--etitic-green-dark);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.jury-project-head {
+  gap: 0.35rem;
+}
+
+.jury-card {
+  border-radius: 16px;
+}
+
+.jury-card .card__body {
+  padding: 1rem;
+}
+
+.jury-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.jury-mini-tag {
+  border-radius: 999px;
+  padding: 0.18rem 0.52rem;
+  font-size: 0.66rem;
+  font-weight: 800;
+  color: #2f854f;
+  background: #e9f5ee;
+}
+
+.jury-bullets {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #505c66;
+  line-height: 1.5;
+  display: grid;
+  gap: 0.38rem;
+}
+
+.jury-score-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #eff3f1;
+}
+
+.jury-score-row:last-child {
+  border-bottom: none;
+}
+
+.jury-score-row > span {
+  font-weight: 700;
+}
+
+.jury-score-group {
+  display: inline-flex;
+  gap: 0.38rem;
+}
+
+.jury-score-group button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #d5ddd9;
+  background: #ffffff;
+  color: #4f5c66;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.jury-score-group button.is-on {
+  border-color: var(--etitic-green);
+  background: var(--etitic-green);
+  color: #ffffff;
+}
+
+.jury-note {
+  min-height: 120px;
+}
+
+.jury-section--last {
+  padding-top: 0.2rem;
+}
+
+.jury-submit {
+  width: 100%;
+  min-height: 52px;
+  font-size: 1rem;
+}
+
+.jury-best {
+  border-color: rgba(31, 111, 74, 0.24);
+  background:
+    radial-gradient(320px 120px at 90% -10%, rgba(63, 184, 112, 0.22), transparent 58%),
+    #ffffff;
+}
+
+.jury-best .card__body {
+  padding: 1.15rem;
+}
+
+.jury-best__kicker {
+  margin: 0;
+  color: var(--etitic-green-dark);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.jury-best h2 {
+  margin: 0.35rem 0 0.3rem;
+  font-size: 1.55rem;
+  line-height: 1.1;
+}
+
+.jury-best__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.jury-best__meta strong {
+  font-size: 1.1rem;
+  color: var(--etitic-green-dark);
+}
+
+.jury-result-item {
+  cursor: default;
+}
+
+@media (min-width: 768px) {
+  .jury-phone {
+    margin: 1.2rem auto;
+    border: 1px solid #dbe5df;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(17, 43, 30, 0.14);
+  }
+
+  .jury-header {
+    border-radius: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jury-item,
+  .jury-score-group button,
+  .jury-icon-btn {
+    transition: none;
+  }
+}

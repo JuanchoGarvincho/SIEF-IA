@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluacion de Proyecto | Jurado ETITC</title>
+  <link rel="stylesheet" href="../../Parte_Estudiantes/styles.css" />
+  <link rel="stylesheet" href="../assets/jurado.css" />
+</head>
+<body>
+  <div class="jury-phone" data-page="evaluacion">
+    <header class="jury-header card jury-header--compact">
+      <div class="jury-eval-top">
+        <a class="jury-back" href="../panel/index.html" aria-label="Volver">&larr;</a>
+        <strong>Evaluacion</strong>
+        <span class="jury-stand-pill" id="standLabel">Stand B22</span>
+      </div>
+    </header>
+
+    <main class="jury-main jury-main--compact">
+      <section class="jury-section jury-project-head">
+        <h1 class="jury-title jury-title--small" id="projectTitle">AgroSense IoT</h1>
+        <p class="jury-subline" id="projectCategory">Categoria: IoT &amp; Agricultura</p>
+        <p class="jury-subline" id="projectStudent">Estudiante: Camilo Restrepo</p>
+      </section>
+
+      <section class="card jury-card">
+        <div class="card__body">
+          <div class="jury-card-title-row">
+            <h2>Asistente de Preguntas (IA)</h2>
+            <span class="jury-mini-tag">GENERADO POR IA</span>
+          </div>
+          <ul class="jury-bullets" id="aiQuestions"></ul>
+        </div>
+      </section>
+
+      <section class="card jury-card">
+        <div class="card__body">
+          <h2>Rubrica de Calificacion</h2>
+
+          <div class="jury-score-row">
+            <span>Innovacion</span>
+            <div class="jury-score-group" data-field="innovacion">
+              <button type="button">1</button><button type="button">2</button><button type="button">3</button><button class="is-on" type="button">4</button><button type="button">5</button>
+            </div>
+          </div>
+
+          <div class="jury-score-row">
+            <span>Viabilidad Tecnica</span>
+            <div class="jury-score-group" data-field="viabilidad">
+              <button type="button">1</button><button type="button">2</button><button class="is-on" type="button">3</button><button type="button">4</button><button type="button">5</button>
+            </div>
+          </div>
+
+          <div class="jury-score-row">
+            <span>Sustentacion Oral</span>
+            <div class="jury-score-group" data-field="sustentacion">
+              <button type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">4</button><button type="button">5</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card jury-card">
+        <div class="card__body">
+          <h2>Notas Rapidas Constructivas</h2>
+          <label class="field" for="notaJurado">
+            <textarea class="field__textarea jury-note" id="notaJurado" placeholder="Ejemplo: buen codigo, mejorar presentacion y validar datos en campo..."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="jury-section jury-section--last">
+        <button class="btn btn--primary jury-submit" type="button">Enviar Evaluacion Final</button>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../assets/jurado.js"></script>
+</body>
+</html>

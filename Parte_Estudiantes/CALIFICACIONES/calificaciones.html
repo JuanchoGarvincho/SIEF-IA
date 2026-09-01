@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calificaciones | Plataforma de Evaluación de Ferias Tecnológicas</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="brand" aria-label="ETITC">
+          <div class="brand__mark">ET</div>
+          <div class="brand__text">
+            <span class="brand__kicker">ETITC</span>
+            <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
+          </div>
+        </div>
+        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav__inner">
+        <a class="nav__link" href="../INSCRIPCION/index.html">Inscripción</a>
+        <a class="nav__link" href="../MI%20PROYECTO/proyecto.html">Mi Proyecto</a>
+        <a class="nav__link is-active" href="./calificaciones.html">Calificaciones</a>
+        <a class="nav__link" href="../CRONOGRAMA/cronograma.html">Cronograma</a>
+      </div>
+    </nav>
+
+    <main class="page">
+      <section class="page__hero">
+        <span class="eyebrow">Resultados de evaluación</span>
+        <h1 class="page__title">Calificación consolidada del proyecto</h1>
+        <p class="page__subtitle">Consulta la nota global, el desglose de rúbrica y la retroalimentación consolidada junto con los comentarios individuales de los jurados.</p>
+      </section>
+
+      <section class="grid grid--two">
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Calificación final</h2>
+            <p class="card__subtitle">Resultado global emitido por el panel de evaluación.</p>
+          </div>
+          <div class="card__body">
+            <div class="scorecard">
+              <div class="scorecard__value">88 / 100</div>
+              <div class="scorecard__label">A- Excelente</div>
+            </div>
+            <div class="meter" style="margin-top: 1rem;" aria-hidden="true">
+              <div class="meter__fill"></div>
+            </div>
+            <p class="helper" style="margin-bottom: 0;">Desempeño sólido, con oportunidades de mejora en validación y presentación técnica.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Retroalimentación Consolidada</h2>
+            <p class="card__subtitle">Resumen generado por IA a partir de los comentarios del jurado.</p>
+          </div>
+          <div class="card__body">
+            <div class="comment" style="margin-bottom: 1rem;">
+              <div class="comment__meta"><span>IA</span><span class="tag">Consolidado</span></div>
+              <p style="margin: 0; color: var(--text);">El proyecto muestra una propuesta técnicamente coherente, con una narrativa clara y una solución útil. Se recomienda fortalecer métricas de impacto, documentar pruebas de campo y preparar una explicación más visual del flujo de datos.</p>
+            </div>
+
+            <div class="feedback-grid">
+              <div class="comment">
+                <div class="comment__meta"><span>Jurado 1</span><span>Innovación</span></div>
+                <p style="margin: 0;">La idea es pertinente y resuelve una necesidad real. La integración IoT está bien planteada.</p>
+              </div>
+              <div class="comment">
+                <div class="comment__meta"><span>Jurado 2</span><span>Viabilidad</span></div>
+                <p style="margin: 0;">La solución es viable, pero conviene detallar mejor la autonomía energética y la robustez del sistema.</p>
+              </div>
+              <div class="comment">
+                <div class="comment__meta"><span>Jurado 3</span><span>Presentación</span></div>
+                <p style="margin: 0;">La exposición fue clara. Falta reforzar las cifras de validación y los resultados medibles.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card" style="margin-top: 1.25rem;">
+        <div class="card__header">
+          <h2 class="card__title">Desglose de Rúbrica</h2>
+          <p class="card__subtitle">Distribución de puntajes por criterio evaluado.</p>
+        </div>
+        <div class="card__body">
+          <div class="table-wrap">
+            <table aria-label="Desglose de rúbrica">
+              <thead>
+                <tr>
+                  <th>Criterio</th>
+                  <th>Puntaje</th>
+                  <th>Observación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Innovación</td>
+                  <td>18 / 20</td>
+                  <td>Propuesta diferenciada y bien contextualizada.</td>
+                </tr>
+                <tr>
+                  <td>Viabilidad</td>
+                  <td>17 / 20</td>
+                  <td>Requiere afinar algunos detalles de implementación.</td>
+                </tr>
+                <tr>
+                  <td>Impacto</td>
+                  <td>18 / 20</td>
+                  <td>Potencial claro de aplicación en escenarios reales.</td>
+                </tr>
+                <tr>
+                  <td>Presentación</td>
+                  <td>17 / 20</td>
+                  <td>Buena claridad, con margen para reforzar visualización.</td>
+                </tr>
+                <tr>
+                  <td>Documentación</td>
+                  <td>18 / 20</td>
+                  <td>Base documental consistente y ordenada.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="../app.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscripción | Plataforma de Evaluación de Ferias Tecnológicas</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="brand" aria-label="ETITC">
+          <div class="brand__mark">ET</div>
+          <div class="brand__text">
+            <span class="brand__kicker">ETITC</span>
+            <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
+          </div>
+        </div>
+        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav__inner">
+        <a class="nav__link is-active" href="./index.html">Inscripción</a>
+        <a class="nav__link" href="../MI%20PROYECTO/proyecto.html">Mi Proyecto</a>
+        <a class="nav__link" href="../CALIFICACIONES/calificaciones.html">Calificaciones</a>
+        <a class="nav__link" href="../CRONOGRAMA/cronograma.html">Cronograma</a>
+      </div>
+    </nav>
+
+    <main class="page">
+      <section class="page__hero">
+        <span class="eyebrow">Módulo de inscripción</span>
+        <h1 class="page__title">Registro del proyecto para la feria tecnológica</h1>
+        <p class="page__subtitle">Completa la información inicial del proyecto y revisa el diagnóstico automático de viabilidad antes de enviar tu propuesta.</p>
+      </section>
+
+      <section class="grid grid--two" aria-label="Formulario de inscripción y retroalimentación de IA">
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Datos del proyecto</h2>
+            <p class="card__subtitle">Ingresa la información base para la evaluación preliminar.</p>
+          </div>
+          <div class="card__body">
+            <form class="form" id="inscripcionForm">
+              <label class="field" for="tituloProyecto">
+                <span class="field__label">Título del Proyecto</span>
+                <input class="field__control" id="tituloProyecto" name="tituloProyecto" type="text" placeholder="AgroSense IoT" value="AgroSense IoT" />
+              </label>
+
+              <label class="field" for="categoria">
+                <span class="field__label">Categoría</span>
+                <select class="field__select" id="categoria" name="categoria">
+                  <option>IoT y Automatización</option>
+                  <option>Inteligencia Artificial</option>
+                  <option>Robótica</option>
+                  <option>Desarrollo de Software</option>
+                  <option>Electrónica y Sistemas Embebidos</option>
+                </select>
+              </label>
+
+              <label class="field" for="resumenTecnico">
+                <span class="field__label">Resumen Técnico</span>
+                <textarea class="field__textarea" id="resumenTecnico" name="resumenTecnico" placeholder="Describe el problema, la solución propuesta, componentes principales y el impacto esperado.">AgroSense IoT integra sensores de humedad, temperatura y conectividad inalámbrica para optimizar el riego agrícola en tiempo real.</textarea>
+              </label>
+
+              <p class="helper">Este formulario está preparado para futuras validaciones y envío de datos.</p>
+
+              <div class="button-row">
+                <button class="btn btn--primary" type="submit">Guardar inscripción</button>
+                <button class="btn btn--ghost" type="button">Revisar borrador</button>
+              </div>
+            </form>
+          </div>
+        </article>
+
+        <aside class="card diagnostic">
+          <div class="card__header">
+            <span class="diagnostic__badge">Retroalimentación de IA</span>
+            <h2 class="card__title" style="margin-top: 0.9rem;">Diagnóstico de viabilidad</h2>
+            <p class="card__subtitle">Evaluación automática basada en claridad técnica, aplicabilidad e impacto.</p>
+          </div>
+          <div class="card__body">
+            <div class="diagnostic__score">88%</div>
+            <p class="diagnostic__meta">Alta probabilidad de ejecución con una propuesta bien delimitada y una arquitectura técnica coherente.</p>
+            <div class="meter" aria-hidden="true">
+              <div class="meter__fill"></div>
+            </div>
+            <ul class="diagnostic__list">
+              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>La solución presenta un problema real y medible.</span></li>
+              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>La propuesta técnica es consistente con el alcance esperado.</span></li>
+              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>Se recomienda definir métricas de validación y pruebas de campo.</span></li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <script src="../app.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cronograma | Plataforma de Evaluación de Ferias Tecnológicas</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="brand" aria-label="ETITC">
+          <div class="brand__mark">ET</div>
+          <div class="brand__text">
+            <span class="brand__kicker">ETITC</span>
+            <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
+          </div>
+        </div>
+        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav__inner">
+        <a class="nav__link" href="../INSCRIPCION/index.html">Inscripción</a>
+        <a class="nav__link" href="../MI%20PROYECTO/proyecto.html">Mi Proyecto</a>
+        <a class="nav__link" href="../CALIFICACIONES/calificaciones.html">Calificaciones</a>
+        <a class="nav__link is-active" href="./cronograma.html">Cronograma</a>
+      </div>
+    </nav>
+
+    <main class="page">
+      <section class="page__hero">
+        <span class="eyebrow">Agenda del proceso</span>
+        <h1 class="page__title">Cronograma de hitos clave</h1>
+        <p class="page__subtitle">Línea de tiempo vertical con el estado de cada fecha importante para el seguimiento del proyecto.</p>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h2 class="card__title">Secuencia de actividades</h2>
+          <p class="card__subtitle">Estados actuales: completado, en curso y próximo.</p>
+        </div>
+        <div class="card__body">
+          <div class="timeline" aria-label="Línea de tiempo del cronograma">
+            <article class="timeline__item">
+              <div class="timeline__date">01 de Octubre</div>
+              <p style="margin: 0.4rem 0 0;">Registro inicial del proyecto y validación de la propuesta.</p>
+              <span class="timeline__status">Completado</span>
+            </article>
+
+            <article class="timeline__item">
+              <div class="timeline__date">15 de Octubre</div>
+              <p style="margin: 0.4rem 0 0;">Entrega de avances, revisión técnica y ajustes de la maqueta funcional.</p>
+              <span class="timeline__status">En Curso</span>
+            </article>
+
+            <article class="timeline__item">
+              <div class="timeline__date">25 de Octubre</div>
+              <p style="margin: 0.4rem 0 0;">Presentación final, sustentación ante jurados y cierre de evaluación.</p>
+              <span class="timeline__status">Próximo</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid--two" style="margin-top: 1.25rem;">
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Estado general</h2>
+            <p class="card__subtitle">Resumen del flujo operativo.</p>
+          </div>
+          <div class="card__body">
+            <div class="progress" aria-label="Avance del cronograma">
+              <div class="progress__bar" style="width: 66%;"></div>
+            </div>
+            <p class="helper" style="margin-bottom: 0;">La agenda avanza según lo planeado, con hitos intermedios cumplidos y una fecha final cercana.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__header">
+            <h2 class="card__title">Siguiente acción recomendada</h2>
+            <p class="card__subtitle">Prioridad sugerida por la plataforma.</p>
+          </div>
+          <div class="card__body">
+            <div class="comment">
+              <div class="comment__meta"><span>IA</span><span class="tag">Recomendación</span></div>
+              <p style="margin: 0;">Preparar una demo funcional con métricas visibles y un guion de presentación de menos de 5 minutos para asegurar claridad en la sustentación final.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../app.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso | Plataforma ETITC</title>
+  <link rel="stylesheet" href="../Parte_Estudiantes/styles.css" />
+  <link rel="stylesheet" href="./login.css" />
+</head>
+<body>
+  <div class="login-shell">
+    <header class="login-topbar" aria-label="Cabecera">
+      <div class="login-topbar__inner">
+        <div class="login-brand" aria-label="ETITC">
+          <div class="login-brand__mark" aria-hidden="true">
+            <span></span>
+          </div>
+          <div class="login-brand__text">
+            <strong>ETITC</strong>
+            <span>INSTITUTO TECNICO CENTRAL</span>
+          </div>
+        </div>
+        <div class="login-help">
+          <span>Necesitas ayuda?</span>
+          <a href="#" class="login-help__pill">Soporte Tecnico</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="login-main">
+      <section class="login-hero" aria-label="Resumen de plataforma">
+        <div class="login-hero__overlay"></div>
+        <div class="login-hero__content">
+          <span class="eyebrow">FERIAS TECNOLOGICAS</span>
+          <h1>Evaluacion transparente, estructurada y eficiente.</h1>
+          <p>Plataforma oficial para la presentacion, evaluacion y calificacion de proyectos de ciencia y tecnologia de la Escuela Tecnologica Instituto Tecnico Central.</p>
+        </div>
+        <div class="login-hero__stats" aria-label="Metricas de plataforma">
+          <div>
+            <strong>+200</strong>
+            <span>PROYECTOS ANUALES</span>
+          </div>
+          <div>
+            <strong>100%</strong>
+            <span>DIGITALIZADO</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="login-panel" aria-label="Portal de acceso">
+        <article class="card login-card">
+          <div class="card__body">
+            <p class="login-kicker">PORTAL DE ACCESO</p>
+            <h2 class="login-title">Evaluacion de Ferias</h2>
+            <p class="login-subtitle">Ingresa tus credenciales institucionales autorizadas para iniciar el proceso.</p>
+
+            <form id="loginForm" class="form login-form">
+              <label class="field" for="rol">
+                <span class="field__label">Ingreso como</span>
+                <select class="field__select" id="rol" name="rol" required>
+                  <option value="estudiantes">Estudiantes</option>
+                  <option value="jurado">Jurado</option>
+                </select>
+              </label>
+
+              <label class="field" for="correo">
+                <span class="field__label">Correo Institucional</span>
+                <input class="field__control" id="correo" name="correo" type="email" placeholder="ejemplo@itc.edu.co" required />
+              </label>
+
+              <label class="field" for="clave">
+                <span class="field__label">Contrasena</span>
+                <input class="field__control" id="clave" name="clave" type="password" placeholder="Introduce tu contrasena" required />
+              </label>
+
+              <div class="login-row">
+                <label class="login-check">
+                  <input type="checkbox" name="recordar" />
+                  <span>Recordarme</span>
+                </label>
+                <a href="#" class="login-link">Olvidaste tu contrasena?</a>
+              </div>
+
+              <button class="btn btn--primary login-submit" type="submit">
+                Iniciar Sesion
+                <span aria-hidden="true">-></span>
+              </button>
+            </form>
+
+            <p class="login-note" id="loginNote">Solo personal autorizado puede acceder a este modulo.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="login-footer">
+      <span>© 2026 Escuela Tecnologica Instituto Tecnico Central. Todos los derechos reservados.</span>
+      <div class="login-footer__links">
+        <a href="#">Politicas de Privacidad</a>
+        <a href="#">Terminos de Servicio</a>
+        <a href="#">Portal Principal ETITC</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./login.js"></script>
+</body>
+</html>
