@@ -2,6 +2,8 @@ import { assignedCardTemplate, questionsTemplate, resultCardTemplate } from "./c
 import { getAssignedProjects, getProjectByStand, getRankedResults, saveEvaluation } from "./services/juradoService.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+  setupProfileModal();
+
   const page = document.querySelector(".jury-phone")?.dataset.page;
 
   if (page === "panel") {
@@ -194,4 +196,59 @@ async function setupResultsPage() {
   if (bestScore) {
     bestScore.textContent = `${best.score} / 100`;
   }
+}
+
+function setupProfileModal() {
+  const link = document.getElementById("perfilLink");
+  const overlay = document.getElementById("perfilOverlay");
+  const closeButton = document.getElementById("perfilClose");
+  const logoutButton = document.getElementById("perfilLogout");
+
+  if (!link || !overlay) {
+    return;
+  }
+
+  const correoField = document.getElementById("perfilCorreo");
+  if (correoField) {
+    try {
+      const session = JSON.parse(localStorage.getItem("etitc-session") || "null");
+      if (session?.correo) {
+        correoField.textContent = session.correo;
+      }
+    } catch (error) {
+      localStorage.removeItem("etitc-session");
+    }
+  }
+
+  const openModal = () => {
+    overlay.hidden = false;
+  };
+
+  const closeModal = () => {
+    overlay.hidden = true;
+  };
+
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    openModal();
+  });
+
+  closeButton?.addEventListener("click", closeModal);
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !overlay.hidden) {
+      closeModal();
+    }
+  });
+
+  logoutButton?.addEventListener("click", () => {
+    localStorage.removeItem("etitc-session");
+    window.location.href = "../../LOGIN/index.html?rol=jurado";
+  });
 }

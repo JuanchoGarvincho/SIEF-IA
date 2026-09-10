@@ -394,6 +394,91 @@ body {
   cursor: default;
 }
 
+.jury-bottom-nav a#perfilLink {
+  cursor: pointer;
+}
+
+.jury-profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 35, 24, 0.45);
+  padding: 1.2rem;
+}
+
+.jury-profile-overlay[hidden] {
+  display: none;
+}
+
+.jury-profile-modal {
+  position: relative;
+  width: min(360px, 100%);
+  padding: 1.6rem 1.4rem;
+  text-align: center;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+}
+
+.jury-profile-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: #f0f6f3;
+  color: var(--etitic-green-dark);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.jury-profile-avatar {
+  width: 56px;
+  height: 56px;
+  font-size: 1rem;
+}
+
+.jury-profile-name {
+  margin: 0.2rem 0 0;
+  font-size: 1.3rem;
+}
+
+.jury-profile-details {
+  width: 100%;
+  margin: 0.5rem 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.jury-profile-details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #eff3f1;
+}
+
+.jury-profile-details dt {
+  color: #6e7a83;
+  font-weight: 600;
+}
+
+.jury-profile-details dd {
+  margin: 0;
+  font-weight: 700;
+  color: #212a31;
+}
+
+.jury-profile-logout {
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
 @media (min-width: 768px) {
   .jury-phone {
     margin: 1.2rem auto;

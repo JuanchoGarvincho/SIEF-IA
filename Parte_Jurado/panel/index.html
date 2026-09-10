@@ -45,8 +45,22 @@
     <nav class="jury-bottom-nav" aria-label="Navegacion movil">
       <a class="is-active" href="./index.html">Inicio</a>
       <a href="../resultados/index.html">Resultados</a>
-      <a href="../../LOGIN/index.html?rol=jurado">Perfil</a>
+      <a href="#" id="perfilLink">Perfil</a>
     </nav>
+
+    <div class="jury-profile-overlay" id="perfilOverlay" hidden>
+      <div class="jury-profile-modal card" role="dialog" aria-modal="true" aria-labelledby="perfilNombre">
+        <button class="jury-profile-close" type="button" id="perfilClose" aria-label="Cerrar">&times;</button>
+        <div class="jury-avatar jury-profile-avatar" aria-hidden="true">HR</div>
+        <h2 class="jury-profile-name" id="perfilNombre">Ing. Helena Rostova</h2>
+        <p class="jury-subline">Jurado Evaluador &middot; ETITC</p>
+        <dl class="jury-profile-details">
+          <div><dt>Correo</dt><dd id="perfilCorreo">helena.rostova@itc.edu.co</dd></div>
+          <div><dt>Rol</dt><dd>Jurado</dd></div>
+        </dl>
+        <button class="btn btn--ghost jury-profile-logout" type="button" id="perfilLogout">Cerrar sesion</button>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="../assets/jurado.js"></script>

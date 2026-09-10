@@ -147,6 +147,86 @@ img {
   box-shadow: var(--shadow-chip);
 }
 
+.user-chip--clickable {
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
+}
+
+.user-chip--clickable:hover,
+.user-chip--clickable:focus-visible {
+  outline: none;
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(18, 38, 27, 0.45);
+  padding: 1.2rem;
+}
+
+.profile-overlay[hidden] {
+  display: none;
+}
+
+.profile-modal {
+  position: relative;
+  width: min(380px, 100%);
+  padding: 1.8rem 1.5rem;
+  text-align: center;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+}
+
+.profile-modal__close {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: var(--etitic-green-soft);
+  color: var(--etitic-green-dark);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.profile-modal__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: var(--etitic-green-dark);
+  background: var(--etitic-green-soft);
+  border: 1px solid rgba(31, 111, 74, 0.16);
+}
+
+.profile-modal__title {
+  margin: 0.2rem 0 0;
+  font-size: 1.2rem;
+}
+
+.profile-modal__status {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.profile-modal__action,
+.profile-modal__logout {
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
 .nav {
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(10px);

@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
 
     const role = roleSelect.value;
+    const correo = document.getElementById("correo")?.value.trim() || "";
+
+    localStorage.setItem("etitc-session", JSON.stringify({ rol: role, correo }));
+
     if (role === "jurado") {
       window.location.href = "../Parte_Jurado/panel/index.html";
       return;
