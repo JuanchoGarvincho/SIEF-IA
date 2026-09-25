@@ -5,6 +5,7 @@ body {
 }
 
 .jury-phone {
+  width: 100%;
   max-width: 430px;
   min-height: 100dvh;
   margin: 0 auto;
@@ -480,16 +481,143 @@ body {
 }
 
 @media (min-width: 768px) {
+  body {
+    background:
+      radial-gradient(900px 520px at 100% 0, rgba(31, 111, 74, 0.13), transparent 56%),
+      linear-gradient(180deg, #f5f8f6 0%, #edf3ef 100%);
+  }
+
   .jury-phone {
-    margin: 1.2rem auto;
-    border: 1px solid #dbe5df;
-    border-radius: 26px;
-    overflow: hidden;
-    box-shadow: 0 18px 40px rgba(17, 43, 30, 0.14);
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 2rem 3rem 17rem;
+    background: transparent;
   }
 
   .jury-header {
-    border-radius: 0;
+    max-width: 1240px;
+    margin: 1.5rem auto 0;
+    border: 1px solid #dbe5df;
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(17, 43, 30, 0.08);
+  }
+
+  .jury-user-row,
+  .jury-eval-top {
+    padding: 1rem 1.35rem;
+  }
+
+  .jury-main {
+    width: min(1240px, 100%);
+    margin: 0 auto;
+    padding: 2rem 0;
+    gap: 1.5rem;
+  }
+
+  .jury-main--compact {
+    grid-template-columns: minmax(0, 0.85fr) minmax(380px, 1.15fr);
+    align-items: start;
+    gap: 1.25rem;
+  }
+
+  .jury-title {
+    font-size: 2.35rem;
+  }
+
+  .jury-title--small {
+    font-size: 2.45rem;
+  }
+
+  .jury-scan {
+    width: max-content;
+    min-width: 280px;
+  }
+
+  .jury-phone[data-page="panel"] .jury-main > .jury-section:first-child {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+
+  .jury-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .jury-item {
+    min-height: 146px;
+    padding: 1rem 1.05rem;
+  }
+
+  .jury-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(17, 43, 30, 0.12);
+  }
+
+  .jury-project-head,
+  .jury-section--last {
+    grid-column: 1 / -1;
+  }
+
+  .jury-section--last {
+    justify-items: end;
+  }
+
+  .jury-submit {
+    width: min(360px, 100%);
+  }
+
+  .jury-note {
+    min-height: 174px;
+  }
+
+  .jury-bottom-nav {
+    position: fixed;
+    inset: 0 auto 0 0;
+    transform: none;
+    width: 14rem;
+    padding: 1.5rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    border-top: 0;
+    border-right: 1px solid #dbe5df;
+    box-shadow: 10px 0 30px rgba(17, 43, 30, 0.05);
+  }
+
+  .jury-bottom-nav::before {
+    content: "SIEF | Jurados";
+    display: block;
+    padding: 0.7rem 0.8rem 1.5rem;
+    color: var(--etitic-green-dark);
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+
+  .jury-bottom-nav a {
+    padding: 0.9rem 0.8rem;
+    text-align: left;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .jury-bottom-nav a:hover,
+  .jury-bottom-nav a:focus-visible {
+    outline: none;
+    transform: translateX(3px);
+    color: var(--etitic-green-dark);
+    background: #edf6f0;
+  }
+
+  .jury-bottom-nav a.is-active {
+    color: #ffffff;
+    background: var(--etitic-green);
+  }
+
+  .jury-profile-modal {
+    width: min(430px, 100%);
+  }
   }
 }
 
