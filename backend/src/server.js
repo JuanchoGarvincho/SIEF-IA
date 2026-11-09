@@ -24,5 +24,13 @@ app.use('/estudiante', require('./routes/estudianteRoutes'));
 app.use((req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));
 app.use(manejarErrores);
 
-app.listen(process.env.PORT || 3000, () =>
-  console.log(`Servidor listo en http://localhost:${process.env.PORT || 3000}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, async () => {
+  console.log(`Servidor listo en http://localhost:${PORT}`);
+  try {
+    await getPool();
+    console.log('✔ Conectado a SQL Server');
+  } catch (err) {
+    console.error('✖ No se pudo conectar a SQL Server:', err.message);
+  }
+});
