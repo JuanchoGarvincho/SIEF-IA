@@ -68,4 +68,20 @@ Responde SOLO con JSON: {"feedback": "..."}`);
   return String(res.feedback || '').slice(0, 2000);
 }
 
-module.exports = { disponible, generarPreguntas, generarFeedback };
+// Diagnóstico preliminar de viabilidad que ve el estudiante al inscribir su proyecto
+async function generarDiagnostico(titulo, categoria, resumen) {
+  const res = await pedirJSON(
+    `Eres un evaluador de una feria tecnológica universitaria (ETITC, Colombia).
+Proyecto: "${titulo}". Categoría: "${categoria}".
+Resumen técnico: "${resumen}"
+Evalúa la viabilidad según claridad técnica, aplicabilidad e impacto. Sé honesto: un resumen vago o muy corto merece un puntaje bajo.
+Responde SOLO con JSON en español:
+{"puntaje": <entero de 0 a 100>, "resumen": "<una frase con el veredicto>", "observaciones": ["<fortaleza o mejora concreta>", "...", "..."]}`);
+  return {
+    puntaje: Math.max(0, Math.min(100, Math.round(Number(res.puntaje) || 0))),
+    resumen: String(res.resumen || '').slice(0, 400),
+    observaciones: (res.observaciones || []).slice(0, 4).map((o) => String(o).slice(0, 300)),
+  };
+}
+
+module.exports = { disponible, generarPreguntas, generarFeedback, generarDiagnostico };

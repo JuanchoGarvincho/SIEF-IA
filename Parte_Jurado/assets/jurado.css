@@ -628,3 +628,8 @@ body {
     transition: none;
   }
 }
+
+.jury-feedback {
+  margin: 0.55rem 0 0;
+  line-height: 1.5;
+}

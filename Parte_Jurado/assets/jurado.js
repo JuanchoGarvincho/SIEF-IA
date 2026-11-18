@@ -1,8 +1,15 @@
-import { assignedCardTemplate, questionsTemplate, resultCardTemplate } from "./components/templates.js";
-import { getAssignedProjects, getProjectByStand, getRankedResults, saveEvaluation } from "./services/juradoService.js";
+import { assignedCardTemplate, questionsTemplate, resultCardTemplate, standLabel } from "./components/templates.js";
+import { getAssignedProjects, getProjectByStand, getRankedResults, LOGIN_URL, logout, readSession, saveEvaluation } from "./services/juradoService.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  setupProfileModal();
+  const session = readSession();
+  // Las páginas del jurado exigen sesión de jurado: sin token se vuelve al login
+  if (!session?.token || session.rol !== "jurado") {
+    window.location.replace(LOGIN_URL);
+    return;
+  }
+
+  setupProfileModal(session);
 
   const page = document.querySelector(".jury-phone")?.dataset.page;
 
@@ -30,7 +37,13 @@ async function setupPanelPage() {
     return;
   }
 
-  const projects = await getAssignedProjects();
+  let projects;
+  try {
+    projects = await getAssignedProjects();
+  } catch (error) {
+    list.innerHTML = `<p class="jury-subline">No se pudieron cargar los proyectos: ${error.message}</p>`;
+    return;
+  }
   count.textContent = String(projects.length);
   list.innerHTML = projects.map(assignedCardTemplate).join("");
 
@@ -49,19 +62,23 @@ async function setupEvaluationPage() {
   const params = new URLSearchParams(window.location.search);
   const requestedStand = params.get("stand") || "";
 
-  const project = await getProjectByStand(requestedStand);
-  if (!project) {
+  let project;
+  try {
+    project = await getProjectByStand(requestedStand);
+  } catch (error) {
+    const title = document.getElementById("projectTitle");
+    if (title) title.textContent = error.message;
     return;
   }
 
-  const standLabel = document.getElementById("standLabel");
+  const standLabelEl = document.getElementById("standLabel");
   const projectTitle = document.getElementById("projectTitle");
   const projectCategory = document.getElementById("projectCategory");
   const projectStudent = document.getElementById("projectStudent");
   const aiQuestions = document.getElementById("aiQuestions");
 
-  if (standLabel) {
-    standLabel.textContent = `Stand ${project.stand}`;
+  if (standLabelEl) {
+    standLabelEl.textContent = standLabel(project.stand);
   }
   if (projectTitle) {
     projectTitle.textContent = project.title;
@@ -89,6 +106,7 @@ async function setupEvaluationPage() {
     return;
   }
 
+  const estado = document.getElementById("evalEstado");
   submitButton.addEventListener("click", async () => {
     const note = document.getElementById("notaJurado")?.value.trim() || "";
     const scores = {
@@ -96,14 +114,20 @@ async function setupEvaluationPage() {
       viabilidad: getSelectedScore("viabilidad"),
       sustentacion: getSelectedScore("sustentacion")
     };
+    if (Object.values(scores).some((value) => !value)) {
+      if (estado) estado.textContent = "Califica los tres criterios antes de enviar.";
+      return;
+    }
 
-    await saveEvaluation({
-      stand: project.stand,
-      scores,
-      note
-    });
-
-    window.location.href = "../resultados/index.html";
+    submitButton.disabled = true;
+    if (estado) estado.textContent = "Guardando y generando la retroalimentacion con IA (puede tardar unos segundos)...";
+    try {
+      await saveEvaluation({ stand: project.stand, scores, note });
+      window.location.href = "../resultados/index.html";
+    } catch (error) {
+      if (estado) estado.textContent = `No se pudo guardar: ${error.message}`;
+      submitButton.disabled = false;
+    }
   });
 }
 
@@ -159,7 +183,13 @@ async function setupResultsPage() {
     return;
   }
 
-  const results = await getRankedResults();
+  let results;
+  try {
+    results = await getRankedResults();
+  } catch (error) {
+    list.innerHTML = `<p class="jury-subline">No se pudieron cargar los resultados: ${error.message}</p>`;
+    return;
+  }
   if (!results.length) {
     list.innerHTML = `
       <article class="card jury-card">
@@ -188,7 +218,7 @@ async function setupResultsPage() {
     bestName.textContent = best.title;
   }
   if (bestStand) {
-    bestStand.textContent = `Stand ${best.stand}`;
+    bestStand.textContent = standLabel(best.stand);
   }
   if (bestCategory) {
     bestCategory.textContent = `Categoria: ${best.category}`;
@@ -198,7 +228,15 @@ async function setupResultsPage() {
   }
 }
 
-function setupProfileModal() {
+function setupProfileModal(session) {
+  const usuario = session.usuario || {};
+  const nombre = usuario.nombre || session.correo;
+  const iniciales = String(nombre).split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase() || "JU";
+  for (const [id, text] of [["juradoNombre", nombre], ["perfilNombre", nombre], ["perfilCorreo", session.correo], ["juradoIniciales", iniciales], ["perfilIniciales", iniciales]]) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
   const link = document.getElementById("perfilLink");
   const overlay = document.getElementById("perfilOverlay");
   const closeButton = document.getElementById("perfilClose");
@@ -206,18 +244,6 @@ function setupProfileModal() {
 
   if (!link || !overlay) {
     return;
-  }
-
-  const correoField = document.getElementById("perfilCorreo");
-  if (correoField) {
-    try {
-      const session = JSON.parse(localStorage.getItem("etitc-session") || "null");
-      if (session?.correo) {
-        correoField.textContent = session.correo;
-      }
-    } catch (error) {
-      localStorage.removeItem("etitc-session");
-    }
   }
 
   const openModal = () => {
@@ -247,8 +273,5 @@ function setupProfileModal() {
     }
   });
 
-  logoutButton?.addEventListener("click", () => {
-    localStorage.removeItem("etitc-session");
-    window.location.href = "../../LOGIN/index.html?rol=jurado";
-  });
+  logoutButton?.addEventListener("click", logout);
 }

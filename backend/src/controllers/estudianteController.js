@@ -74,10 +74,26 @@ async function inscribir(req, res) {
         [titulo, cat, resumen, ex.id_proyecto]);
       return { idProyecto: ex.id_proyecto, existia: true };
     }
+    // Sin stand el jurado no ve el proyecto, así que se asigna uno libre (o se crea uno nuevo).
+    // El bloqueo evita que dos inscripciones simultáneas tomen el mismo stand.
+    await tx.query('LOCK TABLE ubicacion IN SHARE ROW EXCLUSIVE MODE');
+    let [libre] = await tx.query(
+      `SELECT u.id_ubicacion FROM ubicacion u
+        WHERE u.stand IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM proyecto p WHERE p.id_ubicacion = u.id_ubicacion)
+        ORDER BY u.stand LIMIT 1`);
+    if (!libre) {
+      [libre] = await tx.query(
+        `INSERT INTO ubicacion (id_ubicacion, nomenclatura_salon, stand)
+         SELECT n, 'Por asignar', 'Stand N' || lpad(n::text, 2, '0')
+           FROM (SELECT COALESCE(MAX(id_ubicacion), 0) + 1 AS n FROM ubicacion) s
+         RETURNING id_ubicacion`);
+    }
+
     const [nuevo] = await tx.query(
-      `INSERT INTO proyecto (id_estudiante, titulo, categoria, resumen_tecnico)
-       VALUES ($1, $2, $3, $4) RETURNING id_proyecto`,
-      [id, titulo, cat, resumen]);
+      `INSERT INTO proyecto (id_estudiante, id_ubicacion, titulo, categoria, resumen_tecnico)
+       VALUES ($1, $2, $3, $4, $5) RETURNING id_proyecto`,
+      [id, libre.id_ubicacion, titulo, cat, resumen]);
     return { idProyecto: nuevo.id_proyecto, existia: false };
   });
 
@@ -135,6 +151,7 @@ async function calificaciones(req, res) {
 
   res.json({
     evaluado: true,
+    evaluaciones: lista.length,
     puntajeFinal, // sobre 100
     criterios,
     // Los jurados salen como "Jurado 1, 2, 3": el estudiante no ve quién es quién
@@ -143,4 +160,21 @@ async function calificaciones(req, res) {
   });
 }
 
-module.exports = { miProyecto, inscribir, calificaciones };
+// POST /estudiante/diagnostico   body: { tituloProyecto, categoria, resumenTecnico }
+// No se guarda: es una revisión previa para que el estudiante mejore su resumen antes de enviarlo.
+async function diagnostico(req, res) {
+  const { tituloProyecto = '', categoria = '', resumenTecnico = '' } = req.body;
+  if (!tituloProyecto.trim() || resumenTecnico.trim().length < 20) {
+    return res.status(400).json({ error: 'Escribe el título y un resumen técnico de al menos 20 caracteres' });
+  }
+  if (!gemini.disponible()) return res.status(503).json({ error: 'La IA no está configurada en el servidor' });
+  try {
+    res.json(await gemini.generarDiagnostico(
+      tituloProyecto.trim().slice(0, 150), categoria.trim().slice(0, 80), resumenTecnico.slice(0, 4000)));
+  } catch (e) {
+    console.error('Diagnóstico con Gemini falló:', e.message);
+    res.status(503).json({ error: 'La IA está ocupada en este momento. Intenta de nuevo en unos segundos.' });
+  }
+}
+
+module.exports = { miProyecto, inscribir, calificaciones, diagnostico };
