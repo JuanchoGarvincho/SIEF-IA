@@ -315,3 +315,122 @@
     gap: 1rem;
   }
 }
+
+/* ===== Pantalla fija: el login ocupa exactamente la ventana y no hace scroll ===== */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.login-shell {
+  height: 100vh;
+  height: 100dvh; /* en celulares descuenta la barra del navegador */
+  min-height: 0;
+}
+
+.login-main,
+.login-hero,
+.login-panel {
+  min-height: 0;
+}
+
+/* Si la ventana es muy baja, solo la tarjeta se desplaza por dentro (la página no se mueve) */
+.login-panel {
+  overflow-y: auto;
+  padding: clamp(0.75rem, 2.5vh, 1.5rem);
+}
+
+.login-topbar__inner {
+  padding-top: clamp(0.6rem, 1.6vh, 1.15rem);
+  padding-bottom: clamp(0.6rem, 1.6vh, 1.15rem);
+}
+
+.login-footer {
+  padding-top: clamp(0.55rem, 1.4vh, 1.15rem);
+  padding-bottom: clamp(0.55rem, 1.4vh, 1.15rem);
+}
+
+/* La tarjeta se compacta según la altura disponible */
+.login-card .card__body {
+  padding: clamp(1.1rem, 3.2vh, 2rem) 2rem;
+}
+
+.login-title {
+  margin: clamp(0.3rem, 0.9vh, 0.65rem) 0 clamp(0.3rem, 0.8vh, 0.55rem);
+}
+
+.login-subtitle {
+  margin-bottom: clamp(0.6rem, 1.8vh, 1.3rem);
+}
+
+.login-form {
+  gap: clamp(0.55rem, 1.6vh, 1rem);
+}
+
+.login-note {
+  margin-top: clamp(0.6rem, 1.8vh, 1.25rem);
+  padding: clamp(0.55rem, 1.3vh, 0.9rem) 1rem;
+}
+
+/* En pantallas angostas no cabe el panel verde al lado: se muestra solo el formulario */
+@media (max-width: 1080px) {
+  .login-main {
+    grid-template-columns: 1fr;
+  }
+
+  .login-hero {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-card .card__body {
+    padding: 1.1rem;
+  }
+
+  .login-footer__links {
+    display: none;
+  }
+}
+
+/* Laptops y pantallas bajas: se compacta el formulario para que quepa sin desplazarse */
+@media (max-height: 820px) {
+  .login-subtitle {
+    display: none;
+  }
+
+  .login-title {
+    margin-bottom: 0.9rem;
+  }
+
+  .login-card .field__control,
+  .login-card .field__select {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+
+  .login-card .field {
+    gap: 0.35rem;
+  }
+
+  .login-submit {
+    margin-top: 0.2rem;
+  }
+
+  .login-note {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+}
+
+@media (max-height: 640px) {
+  .login-kicker,
+  .login-footer {
+    display: none;
+  }
+
+  .login-shell {
+    grid-template-rows: auto 1fr;
+  }
+}
