@@ -30,8 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const correo = document.getElementById("correo")?.value.trim() || "";
     const clave = document.getElementById("clave")?.value || "";
 
-    // URL del backend: se puede cambiar con localStorage "etitc-api-base" (ej. la URL de Render)
-    const apiBase = localStorage.getItem("etitc-api-base") || "http://localhost:3000";
+    // URL del backend en Render. Para usar el backend local:
+    // localStorage.setItem("etitc-api-base", "http://localhost:3000")
+    const apiBase = localStorage.getItem("etitc-api-base") || "https://sief-ia-backend.onrender.com";
 
     let data;
     try {
