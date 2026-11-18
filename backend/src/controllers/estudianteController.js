@@ -1,27 +1,26 @@
-const { sql, getPool } = require('../config/db');
+const { query, transaccion } = require('../config/db');
 const { auditar } = require('../utils/auditoria');
+const { CRITERIOS, claveDe } = require('../utils/criterios');
+const gemini = require('../services/gemini');
 
-const ETIQUETAS = {
-  innovacion: 'Innovación',
-  viabilidad: 'Viabilidad técnica',
-  sustentacion: 'Sustentación oral',
-};
-
-async function buscarProyecto(pool, cedula) {
-  const r = await pool.request().input('c', sql.NVarChar, cedula).query(
-    `SELECT TOP 1 p.id_proyecto, p.titulo, p.categoria, p.resumen_tecnico,
+async function buscarProyecto(idEstudiante) {
+  const [p] = await query(
+    `SELECT p.id_proyecto, p.titulo, p.categoria, p.resumen_tecnico,
             p.pregunta_ia_1, p.pregunta_ia_2, p.pregunta_ia_3,
-            u.stand, u.nomenclatura_salon
-       FROM dbo.PROYECTO p
-       LEFT JOIN dbo.UBICACION u ON u.id_ubicacion = p.id_ubicacion
-      WHERE p.cedula_estudiante = @c
-      ORDER BY p.id_proyecto`);
-  const p = r.recordset[0];
+            u.stand, u.nomenclatura_salon, m.nombre_materia
+       FROM proyecto p
+       LEFT JOIN ubicacion u ON u.id_ubicacion = p.id_ubicacion
+       LEFT JOIN materia m ON m.id_materia = p.id_materia
+      WHERE p.id_estudiante = $1
+      ORDER BY p.id_proyecto
+      LIMIT 1`,
+    [idEstudiante]);
   if (!p) return null;
   return {
     id_proyecto: p.id_proyecto,
     titulo: p.titulo,
     categoria: p.categoria,
+    materia: p.nombre_materia,
     resumen: p.resumen_tecnico,
     stand: p.stand,
     salon: p.nomenclatura_salon,
@@ -31,8 +30,7 @@ async function buscarProyecto(pool, cedula) {
 
 // GET /estudiante/proyecto  -> pantalla "Mi Proyecto"
 async function miProyecto(req, res) {
-  const pool = await getPool();
-  const proyecto = await buscarProyecto(pool, req.usuario.cedula);
+  const proyecto = await buscarProyecto(req.usuario.id);
   if (!proyecto) return res.status(404).json({ error: 'Aún no tienes un proyecto inscrito' });
   res.json(proyecto);
 }
@@ -45,13 +43,11 @@ async function inscribir(req, res) {
     return res.status(400).json({ error: 'El título y la categoría son obligatorios' });
   }
 
-  const cedula = req.usuario.cedula;
-  const pool = await getPool();
+  const { id, cedula } = req.usuario;
 
   // Ley 1581 de 2012 (Habeas Data): sin autorización previa no se guardan datos.
-  const cons = await pool.request().input('c', sql.NVarChar, cedula)
-    .query('SELECT TOP 1 1 AS ok FROM dbo.CONSENTIMIENTO_DATOS WHERE cedula_titular = @c');
-  const yaAutorizo = cons.recordset.length > 0;
+  const cons = await query('SELECT 1 FROM consentimiento_dato WHERE cedula_titular = $1 LIMIT 1', [cedula]);
+  const yaAutorizo = cons.length > 0;
   if (!yaAutorizo && aceptaTratamientoDatos !== true) {
     return res.status(400).json({ error: 'Debes aceptar el tratamiento de datos personales para inscribirte' });
   }
@@ -60,81 +56,78 @@ async function inscribir(req, res) {
   const cat = categoria.trim().slice(0, 80);
   const resumen = resumenTecnico || '';
 
-  const tx = new sql.Transaction(pool);
-  await tx.begin();
-  let existia = false;
-  try {
+  const { idProyecto, existia } = await transaccion(async (tx) => {
     if (!yaAutorizo) {
-      await new sql.Request(tx)
-        .input('c', sql.NVarChar, cedula)
-        .input('ip', sql.NVarChar, String(req.ip || '').slice(0, 50))
-        .input('f', sql.NVarChar, 'Tratamiento de datos personales para la feria tecnológica SIEF-IA (Ley 1581 de 2012)')
-        .query(`INSERT INTO dbo.CONSENTIMIENTO_DATOS (cedula_titular, ip_registro, finalidad_aceptada)
-                VALUES (@c, @ip, @f)`);
+      await tx.query(
+        `INSERT INTO consentimiento_dato (cedula_titular, ip_registro, finalidad_aceptada)
+         VALUES ($1, $2, $3)`,
+        [cedula, String(req.ip || '').slice(0, 50),
+          'Tratamiento de datos personales para la feria tecnológica SIEF-IA (Ley 1581 de 2012)']);
     }
 
-    const ex = await new sql.Request(tx).input('c', sql.NVarChar, cedula)
-      .query('SELECT TOP 1 id_proyecto FROM dbo.PROYECTO WHERE cedula_estudiante = @c ORDER BY id_proyecto');
-
-    if (ex.recordset.length) {
-      existia = true;
-      await new sql.Request(tx)
-        .input('id', sql.Int, ex.recordset[0].id_proyecto)
-        .input('t', sql.NVarChar, titulo).input('cat', sql.NVarChar, cat).input('r', sql.NVarChar, resumen)
-        .query(`UPDATE dbo.PROYECTO SET titulo = @t, categoria = @cat, resumen_tecnico = @r
-                 WHERE id_proyecto = @id`);
-    } else {
-      // id_proyecto NO es IDENTITY en el documento: calculamos el siguiente número.
-      // UPDLOCK + HOLDLOCK evitan que dos inscripciones simultáneas reciban el mismo número.
-      const sig = await new sql.Request(tx).query(
-        'SELECT ISNULL(MAX(id_proyecto), 0) + 1 AS id FROM dbo.PROYECTO WITH (UPDLOCK, HOLDLOCK)');
-      await new sql.Request(tx)
-        .input('id', sql.Int, sig.recordset[0].id)
-        .input('c', sql.NVarChar, cedula)
-        .input('t', sql.NVarChar, titulo).input('cat', sql.NVarChar, cat).input('r', sql.NVarChar, resumen)
-        .query(`INSERT INTO dbo.PROYECTO (id_proyecto, cedula_estudiante, titulo, categoria, resumen_tecnico)
-                VALUES (@id, @c, @t, @cat, @r)`);
+    const [ex] = await tx.query(
+      'SELECT id_proyecto FROM proyecto WHERE id_estudiante = $1 ORDER BY id_proyecto LIMIT 1 FOR UPDATE', [id]);
+    if (ex) {
+      await tx.query(
+        `UPDATE proyecto SET titulo = $1, categoria = $2, resumen_tecnico = $3, fecha_actualizacion = now()
+          WHERE id_proyecto = $4`,
+        [titulo, cat, resumen, ex.id_proyecto]);
+      return { idProyecto: ex.id_proyecto, existia: true };
     }
-    await tx.commit();
-  } catch (e) {
-    await tx.rollback();
-    throw e;
+    const [nuevo] = await tx.query(
+      `INSERT INTO proyecto (id_estudiante, titulo, categoria, resumen_tecnico)
+       VALUES ($1, $2, $3, $4) RETURNING id_proyecto`,
+      [id, titulo, cat, resumen]);
+    return { idProyecto: nuevo.id_proyecto, existia: false };
+  });
+
+  // Las preguntas de IA son un extra: si Gemini falla, la inscripción igual queda guardada.
+  if (gemini.disponible() && resumen.trim()) {
+    try {
+      const [q1, q2, q3] = await gemini.generarPreguntas(titulo, resumen);
+      await query(
+        'UPDATE proyecto SET pregunta_ia_1 = $1, pregunta_ia_2 = $2, pregunta_ia_3 = $3 WHERE id_proyecto = $4',
+        [q1 || null, q2 || null, q3 || null, idProyecto]);
+    } catch (e) {
+      console.error('No se pudieron generar las preguntas con Gemini:', e.message);
+    }
   }
 
   await auditar(cedula, 'Inscripción', existia ? 'Actualizó su proyecto' : 'Inscribió su proyecto');
-  res.status(existia ? 200 : 201).json(await buscarProyecto(pool, cedula));
+  res.status(existia ? 200 : 201).json(await buscarProyecto(id));
 }
 
 // GET /estudiante/calificaciones  -> pantalla "Calificaciones"
 async function calificaciones(req, res) {
-  const pool = await getPool();
-  const proyecto = await buscarProyecto(pool, req.usuario.cedula);
+  const proyecto = await buscarProyecto(req.usuario.id);
   if (!proyecto) return res.status(404).json({ error: 'Aún no tienes un proyecto inscrito' });
 
-  const r = await pool.request().input('p', sql.Int, proyecto.id_proyecto).query(
-    `SELECT ev.id_evaluacion, ev.notas_rapidas, ev.feedback_ia, d.criterio_evaluado, d.puntaje
-       FROM dbo.EVALUACION ev
-       LEFT JOIN dbo.DETALLE_NOTA d ON d.id_evaluacion = ev.id_evaluacion
-      WHERE ev.id_proyecto = @p
-      ORDER BY ev.id_evaluacion`);
+  const filas = await query(
+    `SELECT ev.id_evaluacion, ev.nota_rapida, ev.feedback_ia, d.criterio_evaluado, d.puntaje
+       FROM evaluacion ev
+       LEFT JOIN detalle_nota d ON d.id_evaluacion = ev.id_evaluacion
+      WHERE ev.id_proyecto = $1
+      ORDER BY ev.id_evaluacion`,
+    [proyecto.id_proyecto]);
 
   // Agrupamos las filas por evaluación (cada evaluación trae varias filas de detalle)
   const evs = new Map();
-  for (const f of r.recordset) {
+  for (const f of filas) {
     if (!evs.has(f.id_evaluacion)) {
-      evs.set(f.id_evaluacion, { nota: f.notas_rapidas, feedback: f.feedback_ia, suma: 0, porCriterio: {} });
+      evs.set(f.id_evaluacion, { nota: f.nota_rapida, feedback: f.feedback_ia, suma: 0, porCriterio: {} });
     }
-    if (f.criterio_evaluado) {
+    const clave = claveDe(f.criterio_evaluado);
+    if (clave) {
       const e = evs.get(f.id_evaluacion);
       e.suma += Number(f.puntaje);
-      e.porCriterio[f.criterio_evaluado] = Number(f.puntaje);
+      e.porCriterio[clave] = Number(f.puntaje);
     }
   }
   const lista = [...evs.values()];
   if (!lista.length) return res.json({ evaluado: false, mensaje: 'Tu proyecto aún no ha sido evaluado' });
 
   const puntajeFinal = Math.round(lista.reduce((a, e) => a + (e.suma / 15) * 100, 0) / lista.length);
-  const criterios = Object.entries(ETIQUETAS).map(([clave, etiqueta]) => {
+  const criterios = Object.entries(CRITERIOS).map(([clave, etiqueta]) => {
     const valores = lista.map((e) => e.porCriterio[clave]).filter((v) => v !== undefined);
     const promedio = valores.length ? valores.reduce((a, b) => a + b, 0) / valores.length : 0;
     return { criterio: etiqueta, promedio: +promedio.toFixed(1), maximo: 5 };

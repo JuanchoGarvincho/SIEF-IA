@@ -1,13 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { sql, getPool } = require('../config/db');
+const { query } = require('../config/db');
 const { auditar } = require('../utils/auditoria');
 
 // El <select> del login envía "estudiantes" o "jurado".
-// En el documento son DOS tablas distintas, así que según el rol se busca en una u otra.
+// Son DOS tablas distintas, así que según el rol se busca en una u otra.
 const ROLES = new Map([
-  ['estudiantes', { tabla: 'ESTUDIANTE', id: 'cedula_estudiante', rol: 'estudiante' }],
-  ['jurado', { tabla: 'JURADO', id: 'cedula_jurado', rol: 'jurado' }],
+  ['estudiantes', { tabla: 'estudiante', id: 'id_estudiante', cedula: 'cedula_estudiante', rol: 'estudiante' }],
+  ['jurado', { tabla: 'jurado', id: 'id_jurado', cedula: 'cedula_jurado', rol: 'jurado' }],
 ]);
 
 async function login(req, res) {
@@ -17,18 +17,17 @@ async function login(req, res) {
     return res.status(400).json({ error: 'Datos incompletos' });
   }
 
-  const pool = await getPool();
-  // cfg.tabla y cfg.id salen de la lista de arriba (no del usuario), por eso es seguro armarlos así
-  const r = await pool.request()
-    .input('correo', sql.NVarChar, correo.trim().toLowerCase())
-    .query(`SELECT ${cfg.id} AS cedula, nombre_completo, correo, clave_hash, activo
-              FROM dbo.${cfg.tabla} WHERE correo = @correo`);
+  // cfg.tabla y las columnas salen de la lista de arriba (no del usuario), por eso es seguro armarlos así
+  const [u] = await query(
+    `SELECT ${cfg.id} AS id, ${cfg.cedula} AS cedula, nombre_completo, correo, clave_hash, id_estado
+       FROM ${cfg.tabla} WHERE correo = $1`,
+    [correo.trim().toLowerCase()]);
 
-  const u = r.recordset[0];
-  const ok = u && u.activo !== false && u.clave_hash && (await bcrypt.compare(clave, u.clave_hash));
+  // id_estado 1 = Activo (tabla estado)
+  const ok = u && u.id_estado === 1 && u.clave_hash && (await bcrypt.compare(clave, u.clave_hash));
   if (!ok) return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
 
-  const token = jwt.sign({ cedula: u.cedula, rol: cfg.rol }, process.env.JWT_SECRET, { expiresIn: '8h' });
+  const token = jwt.sign({ id: u.id, cedula: u.cedula, rol: cfg.rol }, process.env.JWT_SECRET, { expiresIn: '8h' });
   await auditar(u.cedula, 'Login', 'Inicio de sesión');
   res.json({
     token,
