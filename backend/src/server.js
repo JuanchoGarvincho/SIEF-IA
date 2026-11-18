@@ -1,20 +1,23 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { getPool } = require('./config/db');
+const { query } = require('./config/db');
 const { asyncHandler, manejarErrores } = require('./middlewares/errores');
+const gemini = require('./services/gemini');
 
 const app = express();
+app.set('trust proxy', 1); // en Render la IP real del usuario llega en X-Forwarded-For
 app.use(cors());          // permite que tu HTML (otro origen) llame a este servidor
 app.use(express.json());  // permite leer el JSON que envía el frontend
 
 // Rutas de prueba
 app.get('/health', (req, res) => res.json({ ok: true }));
 app.get('/health/db', asyncHandler(async (req, res) => {
-  const pool = await getPool();
-  const r = await pool.request().query('SELECT COUNT(*) AS tablas FROM INFORMATION_SCHEMA.TABLES');
-  res.json({ conectado: 1, tablas: r.recordset[0].tablas });
+  const [r] = await query(
+    "SELECT COUNT(*)::int AS tablas FROM information_schema.tables WHERE table_schema = 'public'");
+  res.json({ conectado: true, tablas: r.tablas });
 }));
+app.get('/health/ia', (req, res) => res.json({ gemini: gemini.disponible() }));
 
 // Rutas reales
 app.use('/auth', require('./routes/authRoutes'));
@@ -28,9 +31,9 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
   console.log(`Servidor listo en http://localhost:${PORT}`);
   try {
-    await getPool();
-    console.log('✔ Conectado a SQL Server');
+    await query('SELECT 1');
+    console.log('✔ Conectado a PostgreSQL');
   } catch (err) {
-    console.error('✖ No se pudo conectar a SQL Server:', err.message);
+    console.error('✖ No se pudo conectar a PostgreSQL:', err.message);
   }
 });

@@ -1,16 +1,13 @@
-const { sql, getPool } = require('../config/db');
+const { query } = require('../config/db');
 
-// Escribe una fila en AUDITORIA_ACCESOS (tabla del documento).
+// Escribe una fila en auditoria_acceso.
 // Si falla, solo lo muestra en consola: la auditoría no debe tumbar la petición principal.
 async function auditar(cedula, modulo, accion) {
   try {
-    const pool = await getPool();
-    await pool.request()
-      .input('c', sql.NVarChar, cedula)
-      .input('m', sql.NVarChar, modulo)
-      .input('a', sql.NVarChar, accion)
-      .query(`INSERT INTO dbo.AUDITORIA_ACCESOS (cedula_usuario, modulo_visitado, accion_realizada)
-              VALUES (@c, @m, @a)`);
+    await query(
+      `INSERT INTO auditoria_acceso (cedula_usuario, modulo_visitado, accion_realizada)
+       VALUES ($1, $2, $3)`,
+      [cedula, modulo.slice(0, 100), accion.slice(0, 100)]);
   } catch (e) {
     console.error('No se pudo registrar la auditoría:', e.message);
   }

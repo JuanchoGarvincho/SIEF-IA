@@ -25,8 +25,17 @@ function buildScore(scores) {
   return Math.round((total / 15) * 100);
 }
 
+function readToken() {
+  try {
+    return JSON.parse(window.localStorage.getItem("etitc-session") || "null")?.token || "";
+  } catch {
+    return "";
+  }
+}
+
 async function request(path, options = {}) {
-  const response = await fetch(`${API_BASE}${path}`, options);
+  const headers = { ...(options.headers || {}), Authorization: `Bearer ${readToken()}` };
+  const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
   if (!response.ok) {
     throw new Error(`API error ${response.status}`);
   }
