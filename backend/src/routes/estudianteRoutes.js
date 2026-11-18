@@ -8,5 +8,6 @@ router.use(verificarToken, soloRol('estudiante'));
 router.get('/proyecto', asyncHandler(c.miProyecto));
 router.post('/inscripcion', asyncHandler(c.inscribir));
 router.get('/calificaciones', asyncHandler(c.calificaciones));
+router.post('/diagnostico', asyncHandler(c.diagnostico));
 
 module.exports = router;

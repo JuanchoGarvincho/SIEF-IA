@@ -812,3 +812,36 @@ tbody tr:hover {
     padding-right: var(--space-4);
   }
 }
+/* "hidden" siempre oculta, aunque la clase del elemento le ponga display (ej. .btn) */
+[hidden] {
+  display: none !important;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.consent input {
+  width: 17px;
+  height: 17px;
+  margin-top: 0.2rem;
+  flex: 0 0 auto;
+  accent-color: var(--etitic-green);
+}
+
+.diagnostic__dot--pending {
+  background: transparent;
+  border: 2px solid rgba(31, 111, 74, 0.35);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}

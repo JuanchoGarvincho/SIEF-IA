@@ -17,7 +17,7 @@
             <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
           </div>
         </div>
-        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+        <div class="user-chip">Estudiante</div>
       </div>
     </header>
 
@@ -45,14 +45,14 @@
           </div>
           <div class="card__body">
             <div class="scorecard">
-              <div class="scorecard__value">72%</div>
-              <div class="scorecard__label">Avance global del prototipo</div>
+              <div class="scorecard__value" id="avancePorcentaje">--</div>
+              <div class="scorecard__label" id="proyectoTitulo">Cargando proyecto...</div>
             </div>
             <div style="margin-top: 1rem;">
               <div class="progress" aria-label="Progreso del proyecto">
-                <div class="progress__bar" style="width: 72%;"></div>
+                <div class="progress__bar" id="avanceBarra" style="width: 0%;"></div>
               </div>
-              <p class="helper" style="margin-bottom: 0;">En fase de integración final y validación de sensores.</p>
+              <ul class="diagnostic__list" id="avancePasos"></ul>
             </div>
           </div>
         </article>
@@ -63,11 +63,7 @@
             <p class="card__subtitle">Enfoques de preparación para la sustentación.</p>
           </div>
           <div class="card__body">
-            <ul class="diagnostic__list" style="margin-top: 0;">
-              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>¿Cómo calibran los sensores para garantizar lecturas consistentes en campo?</span></li>
-              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>¿Qué ocurre cuando la conectividad inalámbrica se pierde temporalmente?</span></li>
-              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>¿Cuál es la ventaja comparativa frente a soluciones de riego convencionales?</span></li>
-            </ul>
+            <ul class="diagnostic__list" id="preguntasIA" style="margin-top: 0;"></ul>
           </div>
         </article>
       </section>
@@ -81,9 +77,9 @@
           <div class="grid grid--two" style="align-items: stretch;">
             <div class="panel">
               <div class="panel__body">
-                <span class="tag">Stand B22</span>
-                <h3 style="margin: 0.85rem 0 0.4rem; font-size: 1.2rem;">Pabellón Norte</h3>
-                <p class="page__subtitle" style="max-width: none; margin-bottom: 0;">Ubicación asignada con visibilidad media-alta, acceso frontal y espacio suficiente para demostración del prototipo y material visual.</p>
+                <span class="tag" id="standAsignado">Sin stand</span>
+                <h3 id="salonAsignado" style="margin: 0.85rem 0 0.4rem; font-size: 1.2rem;">-</h3>
+                <p class="page__subtitle" id="standDetalle" style="max-width: none; margin-bottom: 0;">Cuando inscribas tu proyecto se te asigna un stand para la feria.</p>
               </div>
             </div>
 

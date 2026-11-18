@@ -12,8 +12,8 @@
     <header class="jury-header card">
       <div class="jury-user-row">
         <div class="jury-user">
-          <span class="jury-avatar" aria-hidden="true">HR</span>
-          <strong>Ing. Helena Rostova</strong>
+          <span class="jury-avatar" id="juradoIniciales" aria-hidden="true">JU</span>
+          <strong id="juradoNombre">Jurado</strong>
         </div>
         <button class="jury-icon-btn" type="button" aria-label="Notificaciones">&#128276;</button>
       </div>
@@ -51,14 +51,14 @@
     <div class="jury-profile-overlay" id="perfilOverlay" hidden>
       <div class="jury-profile-modal card" role="dialog" aria-modal="true" aria-labelledby="perfilNombre">
         <button class="jury-profile-close" type="button" id="perfilClose" aria-label="Cerrar">&times;</button>
-        <div class="jury-avatar jury-profile-avatar" aria-hidden="true">HR</div>
-        <h2 class="jury-profile-name" id="perfilNombre">Ing. Helena Rostova</h2>
+        <div class="jury-avatar jury-profile-avatar" id="perfilIniciales" aria-hidden="true">JU</div>
+        <h2 class="jury-profile-name" id="perfilNombre">Jurado</h2>
         <p class="jury-subline">Jurado Evaluador &middot; ETITC</p>
         <dl class="jury-profile-details">
-          <div><dt>Correo</dt><dd id="perfilCorreo">helena.rostova@itc.edu.co</dd></div>
+          <div><dt>Correo</dt><dd id="perfilCorreo">-</dd></div>
           <div><dt>Rol</dt><dd>Jurado</dd></div>
         </dl>
-        <button class="btn btn--ghost jury-profile-logout" type="button" id="perfilLogout">Cerrar sesion</button>
+        <button class="btn btn--primary jury-profile-logout" type="button" id="perfilLogout">Cerrar sesion</button>
       </div>
     </div>
   </div>

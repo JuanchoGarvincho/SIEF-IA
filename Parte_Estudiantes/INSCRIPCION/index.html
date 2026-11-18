@@ -17,7 +17,7 @@
             <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
           </div>
         </div>
-        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+        <div class="user-chip">Estudiante</div>
       </div>
     </header>
 
@@ -47,7 +47,7 @@
             <form class="form" id="inscripcionForm">
               <label class="field" for="tituloProyecto">
                 <span class="field__label">Título del Proyecto</span>
-                <input class="field__control" id="tituloProyecto" name="tituloProyecto" type="text" placeholder="AgroSense IoT" value="AgroSense IoT" />
+                <input class="field__control" id="tituloProyecto" name="tituloProyecto" type="text" placeholder="Ej: Sistema de riego inteligente" maxlength="150" required />
               </label>
 
               <label class="field" for="categoria">
@@ -63,14 +63,19 @@
 
               <label class="field" for="resumenTecnico">
                 <span class="field__label">Resumen Técnico</span>
-                <textarea class="field__textarea" id="resumenTecnico" name="resumenTecnico" placeholder="Describe el problema, la solución propuesta, componentes principales y el impacto esperado.">AgroSense IoT integra sensores de humedad, temperatura y conectividad inalámbrica para optimizar el riego agrícola en tiempo real.</textarea>
+                <textarea class="field__textarea" id="resumenTecnico" name="resumenTecnico" placeholder="Describe el problema, la solución propuesta, componentes principales y el impacto esperado."></textarea>
               </label>
 
-              <p class="helper">Este formulario está preparado para futuras validaciones y envío de datos.</p>
+              <label class="consent" id="consentimientoCampo">
+                <input type="checkbox" id="aceptaDatos" name="aceptaDatos" />
+                <span>Autorizo el tratamiento de mis datos personales para la feria tecnológica (Ley 1581 de 2012).</span>
+              </label>
+
+              <p class="helper" id="inscripcionEstado" role="status">Al guardar, la IA genera las preguntas que te hará el jurado.</p>
 
               <div class="button-row">
-                <button class="btn btn--primary" type="submit">Guardar inscripción</button>
-                <button class="btn btn--ghost" type="button">Revisar borrador</button>
+                <button class="btn btn--primary" type="submit" id="btnGuardar">Guardar inscripción</button>
+                <button class="btn btn--ghost" type="button" id="btnDiagnostico">Analizar con IA</button>
               </div>
             </form>
           </div>
@@ -83,16 +88,12 @@
             <p class="card__subtitle">Evaluación automática basada en claridad técnica, aplicabilidad e impacto.</p>
           </div>
           <div class="card__body">
-            <div class="diagnostic__score">88%</div>
-            <p class="diagnostic__meta">Alta probabilidad de ejecución con una propuesta bien delimitada y una arquitectura técnica coherente.</p>
+            <div class="diagnostic__score" id="diagPuntaje">--</div>
+            <p class="diagnostic__meta" id="diagResumen">Escribe el título y el resumen técnico, y pulsa <strong>Analizar con IA</strong> para recibir un diagnóstico.</p>
             <div class="meter" aria-hidden="true">
-              <div class="meter__fill"></div>
+              <div class="meter__fill" id="diagBarra" style="width: 0%;"></div>
             </div>
-            <ul class="diagnostic__list">
-              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>La solución presenta un problema real y medible.</span></li>
-              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>La propuesta técnica es consistente con el alcance esperado.</span></li>
-              <li class="diagnostic__item"><span class="diagnostic__dot"></span><span>Se recomienda definir métricas de validación y pruebas de campo.</span></li>
-            </ul>
+            <ul class="diagnostic__list" id="diagObservaciones"></ul>
           </div>
         </aside>
       </section>

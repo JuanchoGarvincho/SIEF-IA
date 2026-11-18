@@ -17,7 +17,7 @@
             <span class="brand__title">Plataforma de Evaluación de Ferias Tecnológicas</span>
           </div>
         </div>
-        <div class="user-chip">Mateo Silva Calderón | Estudiante · ID: 2026048</div>
+        <div class="user-chip">Estudiante</div>
       </div>
     </header>
 
@@ -45,13 +45,13 @@
           </div>
           <div class="card__body">
             <div class="scorecard">
-              <div class="scorecard__value">88 / 100</div>
-              <div class="scorecard__label">A- Excelente</div>
+              <div class="scorecard__value" id="notaFinal">--</div>
+              <div class="scorecard__label" id="notaEtiqueta">Cargando...</div>
             </div>
             <div class="meter" style="margin-top: 1rem;" aria-hidden="true">
-              <div class="meter__fill"></div>
+              <div class="meter__fill" id="notaBarra" style="width: 0%;"></div>
             </div>
-            <p class="helper" style="margin-bottom: 0;">Desempeño sólido, con oportunidades de mejora en validación y presentación técnica.</p>
+            <p class="helper" id="notaDetalle" style="margin-bottom: 0;"></p>
           </div>
         </article>
 
@@ -61,25 +61,8 @@
             <p class="card__subtitle">Resumen generado por IA a partir de los comentarios del jurado.</p>
           </div>
           <div class="card__body">
-            <div class="comment" style="margin-bottom: 1rem;">
-              <div class="comment__meta"><span>IA</span><span class="tag">Consolidado</span></div>
-              <p style="margin: 0; color: var(--text);">El proyecto muestra una propuesta técnicamente coherente, con una narrativa clara y una solución útil. Se recomienda fortalecer métricas de impacto, documentar pruebas de campo y preparar una explicación más visual del flujo de datos.</p>
-            </div>
-
-            <div class="feedback-grid">
-              <div class="comment">
-                <div class="comment__meta"><span>Jurado 1</span><span>Innovación</span></div>
-                <p style="margin: 0;">La idea es pertinente y resuelve una necesidad real. La integración IoT está bien planteada.</p>
-              </div>
-              <div class="comment">
-                <div class="comment__meta"><span>Jurado 2</span><span>Viabilidad</span></div>
-                <p style="margin: 0;">La solución es viable, pero conviene detallar mejor la autonomía energética y la robustez del sistema.</p>
-              </div>
-              <div class="comment">
-                <div class="comment__meta"><span>Jurado 3</span><span>Presentación</span></div>
-                <p style="margin: 0;">La exposición fue clara. Falta reforzar las cifras de validación y los resultados medibles.</p>
-              </div>
-            </div>
+            <div id="feedbackIA"></div>
+            <div class="feedback-grid" id="comentariosJurado"></div>
           </div>
         </article>
       </section>
@@ -99,32 +82,8 @@
                   <th>Observación</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Innovación</td>
-                  <td>18 / 20</td>
-                  <td>Propuesta diferenciada y bien contextualizada.</td>
-                </tr>
-                <tr>
-                  <td>Viabilidad</td>
-                  <td>17 / 20</td>
-                  <td>Requiere afinar algunos detalles de implementación.</td>
-                </tr>
-                <tr>
-                  <td>Impacto</td>
-                  <td>18 / 20</td>
-                  <td>Potencial claro de aplicación en escenarios reales.</td>
-                </tr>
-                <tr>
-                  <td>Presentación</td>
-                  <td>17 / 20</td>
-                  <td>Buena claridad, con margen para reforzar visualización.</td>
-                </tr>
-                <tr>
-                  <td>Documentación</td>
-                  <td>18 / 20</td>
-                  <td>Base documental consistente y ordenada.</td>
-                </tr>
+              <tbody id="rubrica">
+                <tr><td colspan="3">Cargando...</td></tr>
               </tbody>
             </table>
           </div>
